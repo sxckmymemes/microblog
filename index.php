@@ -6,10 +6,18 @@ $dbname = 'microblog';
 $db_link = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
 ?>
 <meta charset="utf-8">
+<body>
+	<div>
+		<form>
+			<input type="button" value="Логин" onClick='location.href="http://localhost/pshe_07-main/login.php"'>
+			<input type="button" value="Зарегестрироваться" onClick='location.href="http://localhost/pshe_07-main/register.php"'>
+		</form>
+	</div>
+</body>
 <style type="text/css">
 	body {
 		display: flex;
-		flex-direction: column;
+		flex-direction: column;lumn;
 		align-items: center;
 		font-family: Arial, Helvetica, sans-serif;
 	}
