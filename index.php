@@ -9,6 +9,35 @@ $db_link = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
 <body>
 	<div>
 		<form>
+			<?php
+    include "db_link.php";
+
+    if ( isset($_COOKIE["id"]) && isset($_COOKIE["hash"]) ) {  
+        $c_uid  = $_COOKIE["id"];
+        $c_hash = $_COOKIE["hash"];
+
+        $sql = "SELECT * FROM `users` WHERE `user_id`=$c_uid LIMIT 1";
+        $res = mysqli_query($db_link, $sql);
+
+        $data = mysqli_fetch_assoc($res);
+
+        if(
+            ($data["user_hash"] !== $c_hash) || 
+            ($data["user_id"]   !== $c_uid)
+        ) {
+            setcookie("id",   "", time() - 3600*24*30*12, "/");
+            setcookie("hash", "", time() - 3600*24*30*12, "/");
+            echo "Хм, что-то не получилось";
+        }
+        else
+        {
+            echo "".$data['user_login']."";
+        }
+    }
+    else {
+        echo "Включите куки";
+    }
+?>
 			<input type="button" value="Логин" onClick='location.href="http://localhost/pshe_07-main/login.php"'>
 			<input type="button" value="Зарегестрироваться" onClick='location.href="http://localhost/pshe_07-main/register.php"'>
 		</form>
@@ -65,7 +94,9 @@ $db_link = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
 
 	}
 ?>
+
 <?php
 
 	mysqli_free_result($result);
 ?>
+
